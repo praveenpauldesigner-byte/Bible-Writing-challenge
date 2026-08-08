@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6 Days Bible Writing Challenge — Psalm 18:28-33</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-night: #0a0f24;
+    --bg-night-2: #131a3a;
+    --parchment: #f8f0dd;
+    --parchment-dim: #efe4c9;
+    --ink: #241f30;
+    --ink-soft: #59526a;
+    --gold: #f0a93e;
+    --gold-soft: #f6c877;
+    --ember: #d4574a;
+    --muted: #8b93b8;
+    --line: rgba(240,169,62,0.18);
+    --day1: #2c3b73;
+    --day2: #3e4f8c;
+    --day3: #6d5296;
+    --day4: #c97a4a;
+    --day5: #e2a63e;
+    --day6: #4fa6d8;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background: var(--bg-night);
+    color: var(--parchment);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+  }
+
+  /* ---------- STARFIELD ---------- */
+  .stars{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20% 30%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 70% 10%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1.5px 1.5px at 85% 60%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1.5px 1.5px at 55% 45%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 10% 65%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1.5px 1.5px at 95% 25%, rgba(255,255,255,0.6), transparent);
+    background-repeat: repeat;
+    background-size: 500px 500px;
+    opacity:0.8;
+  }
+
+  .wrap{position:relative; z-index:1; max-width:900px; margin:0 auto; padding: 0 20px 80px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    text-align:center;
+    padding: 56px 16px 40px;
+    position:relative;
+  }
+  .eyebrow{
+    font-family:'Inter',sans-serif;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    font-size:11px;
+    color: var(--gold-soft);
+    opacity:0.85;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size: clamp(48px, 10vw, 84px);
+    line-height:0.95;
+    margin: 0 0 6px;
+    color: var(--parchment);
+    text-shadow: 0 0 30px rgba(240,169,62,0.25);
+  }
+  .hero h1 span{ color: var(--gold); }
+  .hero .sub{
+    font-family:'Lora',serif;
+    font-style:italic;
+    font-size: 17px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .ref-badge{
+    display:inline-block;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    letter-spacing:0.08em;
+    font-size:14px;
+    color: var(--ink);
+    background: var(--parchment);
+    padding: 8px 22px;
+    border-radius: 2px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+    transform: rotate(-1deg);
+  }
+
+  /* ---------- LANTERN ---------- */
+  .lantern-zone{
+    display:flex; flex-direction:column; align-items:center;
+    margin: 38px 0 8px;
+  }
+  .lantern-svg{ width:118px; height:auto; overflow:visible; }
+  .lantern-caption{
+    font-family:'Caveat',cursive;
+    font-size: 22px;
+    color: var(--gold-soft);
+    margin-top: 6px;
+  }
+  .lantern-stat{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    color: var(--muted);
+    margin-top:2px;
+  }
+
+  /* ---------- TRAIL ---------- */
+  .trail-section{ position:relative; padding-top: 30px; }
+  .trail-heading{
+    text-align:center;
+    font-family:'Caveat',cursive;
+    font-size: 30px;
+    color: var(--parchment);
+    margin-bottom: 6px;
+  }
+  .trail-heading .accent{ color:var(--gold); }
+  .trail-note{
+    text-align:center;
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom: 40px;
+  }
+
+  .trail{
+    position:relative;
+    padding: 10px 0 10px 34px;
+  }
+  .trail-line-bg, .trail-line-fg{
+    position:absolute;
+    left: 14px; top:0; bottom:0;
+    width: 3px;
+    border-radius: 3px;
+  }
+  .trail-line-bg{ background: rgba(240,169,62,0.15); }
+  .trail-line-fg{
+    background: linear-gradient(180deg, var(--gold), var(--gold-soft));
+    height: 0%;
+    transition: height 0.6s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 0 12px rgba(240,169,62,0.6);
+  }
+
+  .day-card{
+    position:relative;
+    margin-bottom: 22px;
+    opacity:0;
+    transform: translateY(14px);
+    animation: rise 0.6s ease forwards;
+  }
+  .day-card:nth-child(1){animation-delay:.05s}
+  .day-card:nth-child(2){animation-delay:.15s}
+  .day-card:nth-child(3){animation-delay:.25s}
+  .day-card:nth-child(4){animation-delay:.35s}
+  .day-card:nth-child(5){animation-delay:.45s}
+  .day-card:nth-child(6){animation-delay:.55s}
+  @keyframes rise{ to{opacity:1; transform:translateY(0);} }
+
+  .node{
+    position:absolute;
+    left: -34px; top: 22px;
+    width: 30px; height:30px;
+    border-radius:50%;
+    background: var(--bg-night-2);
+    border: 3px solid var(--muted);
+    display:flex; align-items:center; justify-content:center;
+    z-index:2;
+    transition: all .4s ease;
+  }
+  .node svg{ width:15px; height:15px; stroke: var(--muted); fill:none; transition: stroke .4s ease;}
+  .day-card.complete .node{
+    border-color: var(--gold);
+    background: var(--gold);
+    box-shadow: 0 0 16px rgba(240,169,62,0.7);
+  }
+  .day-card.complete .node svg{ stroke: var(--ink); }
+
+  .card-body{
+    background: var(--parchment);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    overflow:hidden;
+    border-left: 6px solid var(--day-color, var(--gold));
+  }
+  .card-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 16px 18px;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--day-color) 14%, var(--parchment)), var(--parchment) 60%);
+  }
+  .card-head-left{ display:flex; align-items:center; gap:12px; }
+  .day-icon{
+    width:34px; height:34px; border-radius:50%;
+    background: var(--day-color, var(--gold));
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .day-icon svg{ width:18px; height:18px; stroke:#fff; fill:none; stroke-width:2;}
+  .day-title{ font-family:'Inter',sans-serif; font-weight:700; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color: var(--ink);}
+  .day-title small{ display:block; font-weight:500; color:var(--ink-soft); font-size:11px; letter-spacing:0.03em; margin-top:2px;}
+  .card-head-right{ display:flex; align-items:center; gap:10px; }
+  .ring{ position:relative; width:34px; height:34px; }
+  .ring svg{ transform: rotate(-90deg); }
+  .ring circle{ fill:none; stroke-width: 4; }
+  .ring .bg{ stroke: rgba(0,0,0,0.1); }
+  .ring .fg{ stroke: var(--day-color, var(--gold)); stroke-linecap:round; transition: stroke-dashoffset .4s ease; }
+  .ring-label{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:var(--ink);}
+  .chevron{ width:16px; height:16px; stroke:var(--ink-soft); fill:none; stroke-width:2.4; transition: transform .3s ease;}
+  .day-card.open .chevron{ transform: rotate(180deg); }
+
+  .card-panel{
+    max-height:0;
+    overflow:hidden;
+    transition: max-height .45s cubic-bezier(.4,0,.2,1);
+  }
+  .day-card.open .card-panel{ max-height: 900px; }
+  .card-inner{ padding: 6px 22px 22px; }
+
+  .verse-block{ padding: 14px 0 18px; border-bottom: 1px dashed rgba(36,31,48,0.2); margin-bottom:16px;}
+  .verse-en{
+    font-family:'Lora',serif;
+    font-size: 16.5px;
+    line-height:1.55;
+    color: var(--ink);
+  }
+  .verse-en .vnum{ color: var(--day-color); font-weight:700; font-style:normal; margin-right:4px;}
+  .verse-ta{
+    font-family:'Noto Sans Tamil',sans-serif;
+    font-size: 15px;
+    line-height:1.7;
+    color: var(--ink-soft);
+    margin-top:10px;
+  }
+  .verse-ta .vnum{ color: var(--day-color); font-weight:700; margin-right:4px;}
+
+  .checklist{ display:flex; flex-direction:column; gap:10px; }
+  .task{
+    display:flex; align-items:center; gap:12px;
+    padding: 10px 12px;
+    background: rgba(0,0,0,0.03);
+    border-radius: 8px;
+    cursor:pointer;
+    transition: background .2s ease;
+  }
+  .task:hover{ background: rgba(0,0,0,0.06); }
+  .task-box{
+    width:22px; height:22px; border-radius:6px;
+    border: 2px solid var(--ink-soft);
+    flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    transition: all .2s ease;
+  }
+  .task-box svg{ width:13px; height:13px; opacity:0; transform:scale(0.6); transition: all .2s ease; stroke:#fff; fill:none; stroke-width:3;}
+  .task.done .task-box{ background: var(--day-color); border-color: var(--day-color); }
+  .task.done .task-box svg{ opacity:1; transform:scale(1); }
+  .task-label{ font-size:14px; color: var(--ink); }
+  .task.done .task-label{ color: var(--ink-soft); text-decoration: line-through; text-decoration-color: rgba(36,31,48,0.3);}
+
+  .complete-banner{
+    display:none;
+    align-items:center; gap:8px;
+    margin-top:14px;
+    padding: 10px 14px;
+    background: color-mix(in srgb, var(--day-color) 16%, transparent);
+    border-radius:8px;
+    font-family:'Caveat',cursive;
+    font-size:18px;
+    color: var(--ink);
+  }
+  .day-card.complete .complete-banner{ display:flex; }
+
+  /* ---------- FOOTER ---------- */
+  .footer{
+    margin-top: 60px;
+    text-align:center;
+  }
+  .rules-card{
+    background: var(--bg-night-2);
+    border: 1px solid rgba(240,169,62,0.2);
+    border-radius: 12px;
+    padding: 26px 24px;
+    text-align:left;
+    margin-bottom: 28px;
+  }
+  .rules-title{
+    font-family:'Caveat',cursive;
+    color: var(--gold);
+    font-size:24px;
+    margin: 0 0 14px;
+    text-align:center;
+  }
+  .rules-list{ list-style:none; padding:0; margin:0; display:grid; gap:10px; max-width:420px; margin:0 auto;}
+  .rules-list li{ display:flex; align-items:center; gap:10px; font-size:14px; color: var(--parchment); }
+  .rules-list li svg{ width:18px; height:18px; stroke:var(--gold); flex-shrink:0; }
+
+  .note-sticky{
+    display:inline-block;
+    background: var(--gold-soft);
+    color: var(--ink);
+    font-family:'Caveat',cursive;
+    font-size:19px;
+    padding: 14px 22px;
+    border-radius: 3px;
+    transform: rotate(1deg);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    margin-bottom: 30px;
+  }
+  .note-sticky b{ color: var(--ember); }
+
+  .quote{
+    font-family:'Lora',serif;
+    font-style:italic;
+    font-size:14px;
+    color: var(--muted);
+    border-top: 1px solid rgba(240,169,62,0.15);
+    padding-top:20px;
+  }
+
+  .reset-link{
+    display:block;
+    text-align:center;
+    margin-top:24px;
+    font-size:12px;
+    color: var(--muted);
+    text-decoration:underline;
+    cursor:pointer;
+    background:none; border:none; font-family:'Inter',sans-serif;
+  }
+
+  @media (max-width:480px){
+    .verse-en{ font-size:15.5px; }
+    .day-title{ font-size:12px; }
+  }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">Memory Verse Chart</div>
+    <h1>6 Days <span>Bible Writing</span><br>Challenge</h1>
+    <div class="sub">"Your word is a lamp to my feet, and a light to my path." — Psalm 119:105</div>
+    <div class="ref-badge">PSALM 18 : 28–33</div>
+
+    <div class="lantern-zone">
+      <svg class="lantern-svg" viewBox="0 0 100 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="lanternClip">
+            <rect x="30" y="45" width="40" height="55" rx="4"/>
+          </clipPath>
+          <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff3c4"/>
+            <stop offset="60%" stop-color="var(--gold)"/>
+            <stop offset="100%" stop-color="var(--ember)" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <ellipse id="glowHalo" cx="50" cy="72" rx="46" ry="46" fill="url(#glowGrad)" opacity="0.15"/>
+        <line x1="50" y1="6" x2="50" y2="18" stroke="#5a4a2f" stroke-width="3"/>
+        <path d="M32 18 Q50 -4 68 18" stroke="#5a4a2f" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <rect x="26" y="18" width="48" height="10" rx="2" fill="#3d3222"/>
+        <rect x="30" y="45" width="40" height="55" rx="4" fill="#241f30" stroke="#3d3222" stroke-width="2"/>
+        <g clip-path="url(#lanternClip)">
+          <rect id="lanternFill" x="30" y="100" width="40" height="0" fill="var(--gold)"/>
+          <ellipse id="flame" cx="50" cy="95" rx="8" ry="12" fill="#fff3c4" opacity="0.9"/>
+        </g>
+        <rect x="30" y="45" width="6" height="55" fill="#3d3222" opacity="0.5"/>
+        <rect x="64" y="45" width="6" height="55" fill="#3d3222" opacity="0.5"/>
+        <rect x="26" y="98" width="48" height="10" rx="2" fill="#3d3222"/>
+        <rect x="38" y="108" width="24" height="8" rx="2" fill="#5a4a2f"/>
+      </svg>
+      <div class="lantern-caption" id="lanternCaption">Light your lamp — begin Day 1</div>
+      <div class="lantern-stat" id="lanternStat">0 of 6 days complete</div>
+    </div>
+  </div>
+
+  <div class="trail-section">
+    <div class="trail-heading">The <span class="accent">Lantern Trail</span></div>
+    <div class="trail-note">Tap a day to open it, check off your tasks, and watch the trail light up.</div>
+
+    <div class="trail" id="trail">
+      <div class="trail-line-bg"></div>
+      <div class="trail-line-fg" id="trailFg"></div>
+      <!-- day cards injected by JS -->
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="rules-card">
+      <div class="rules-title">Challenge Rules</div>
+      <ul class="rules-list">
+        <li><svg viewBox="0 0 24 24" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Read the verse each day</li>
+        <li><svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> Write the verse 5 times in your notebook</li>
+      </ul>
+    </div>
+
+    <div class="note-sticky">Kindly write and bring your notes to the next <b>Teens Meeting!</b></div>
+
+    <div class="quote">Let's spend these 6 days in God's Word, and remember our Creator.</div>
+    <button class="reset-link" id="resetBtn">Reset my progress</button>
+  </div>
+
+</div>
+
+<script>
+const DAYS = [
+  { id:1, verseNum:28, color:'var(--day1)',
+    en:"For You will light my lamp; The LORD my God will enlighten my darkness.",
+    ta:"தேவரீர் என் விளக்கை ஏற்றுவீர்; என் தேவனாகிய கர்த்தர் என் இருளை வெளிச்சமாக்குவார்.",
+    icon:`<path d="M9 3h6l1 4-4 3-4-3 1-4z"/><path d="M8 10h8l-1 8H9l-1-8z"/><path d="M12 21v-3"/>` },
+  { id:2, verseNum:29, color:'var(--day2)',
+    en:"For by You I can run against a troop, By my God I can leap over a wall.",
+    ta:"உம்மாலே நான் ஒரு சேனைக்குள் பாய்ந்துபோவேன்; என் தேவனாலே ஒரு மதிலைத் தாண்டுவேன்.",
+    icon:`<circle cx="15" cy="5" r="2"/><path d="M10 22l2-6 3 2 2-5-4-3-3 2-3 6"/>` },
+  { id:3, verseNum:30, color:'var(--day3)',
+    en:"As for God, His way is perfect; The word of the LORD is proven; He is a shield to all who trust in Him.",
+    ta:"தேவனுடைய வழி உத்தமமானது: கர்த்தருடைய வசனம் புடமிடப்பட்டது; தம்மை நம்பி அனைவருக்கும் அவர் கேடகமாயிருக்கிறார்.",
+    icon:`<path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/>` },
+  { id:4, verseNum:31, color:'var(--day4)',
+    en:"For who is God, except the LORD? And who is a rock, except our God?",
+    ta:"கர்த்தரேயல்லாமல் தேவன் யார்? நம்முடைய தேவனையன்றிக் கன்மலையும் யார்?",
+    icon:`<path d="M4 20l4-11 4 6 3-4 5 9H4z"/>` },
+  { id:5, verseNum:32, color:'var(--day5)',
+    en:"It is God who arms me with strength, And makes my way perfect.",
+    ta:"என்னைப் பலத்தால் இடைகட்டி, என் வழியைச் செவ்வைப்படுத்துகிறவர் தேவனே.",
+    icon:`<path d="M6 15l3-3 2 2 5-5"/><circle cx="17" cy="8" r="2"/><path d="M4 20c2-4 4-4 6-2"/>` },
+  { id:6, verseNum:33, color:'var(--day6)',
+    en:"He makes my feet like the feet of deer, And sets me on my high places.",
+    ta:"அவர் என் கால்களை மான்களுடைய கால்களைப்போலாக்கி, என்னுடைய உயர்தலங்களில் என்னை நிறுத்துகிறார்.",
+    icon:`<path d="M8 3c-2 1-2 3-1 4M16 3c2 1 2 3 1 4"/><path d="M12 7c-3 0-5 2-5 5 0 3 2 4 2 7h6c0-3 2-4 2-7 0-3-2-5-5-5z"/>` }
+];
+
+const TASKS = [
+  "Read the verse",
+  "Write the verse 5 times"
+];
+
+const STORAGE_KEY = 'bible-challenge-progress-v1';
+let progress = {};
+
+function defaultProgress(){
+  const p = {};
+  DAYS.forEach(d => p['day'+d.id] = [false,false]);
+  return p;
+}
+
+let hasAppStorage = (typeof window !== 'undefined') && !!window.storage;
+
+function loadFromLocal(){
+  try{
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : defaultProgress();
+  }catch(e){
+    return defaultProgress();
+  }
+}
+
+function saveToLocal(){
+  try{
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  }catch(e){ /* localStorage unavailable too; progress just won't persist */ }
+}
+
+async function loadProgress(){
+  if(hasAppStorage){
+    try{
+      const res = await window.storage.get(STORAGE_KEY, false);
+      progress = res ? JSON.parse(res.value) : defaultProgress();
+      render();
+      return;
+    }catch(e){
+      // backend read failed (missing key on first run, or a backend error) —
+      // check localStorage in case progress was saved there as a fallback
+      progress = loadFromLocal();
+      render();
+      return;
+    }
+  }
+  progress = loadFromLocal();
+  render();
+}
+
+async function saveProgress(){
+  if(hasAppStorage){
+    try{
+      await window.storage.set(STORAGE_KEY, JSON.stringify(progress), false);
+      return;
+    }catch(e){
+      // backend storage failed — stop using it for the rest of this session
+      hasAppStorage = false;
+    }
+  }
+  saveToLocal();
+}
+
+function checkmarkSvg(){
+  return `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`;
+}
+
+function buildTrail(){
+  const trail = document.getElementById('trail');
+  DAYS.forEach(day => {
+    const card = document.createElement('div');
+    card.className = 'day-card';
+    card.id = 'card-'+day.id;
+    card.style.setProperty('--day-color', day.color);
+
+    card.innerHTML = `
+      <div class="node"><svg viewBox="0 0 24 24" stroke-width="2.5">${checkmarkSvg()}</svg></div>
+      <div class="card-body">
+        <div class="card-head" data-day="${day.id}">
+          <div class="card-head-left">
+            <div class="day-icon"><svg viewBox="0 0 24 24" stroke="#fff" stroke-width="1.8">${day.icon}</svg></div>
+            <div class="day-title">Day ${day.id}<small>Psalm 18:${day.verseNum}</small></div>
+          </div>
+          <div class="card-head-right">
+            <div class="ring">
+              <svg width="34" height="34" viewBox="0 0 34 34">
+                <circle class="bg" cx="17" cy="17" r="14"></circle>
+                <circle class="fg" id="ring-${day.id}" cx="17" cy="17" r="14" stroke-dasharray="87.9" stroke-dashoffset="87.9"></circle>
+              </svg>
+              <div class="ring-label" id="ringLabel-${day.id}">0/2</div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="card-panel">
+          <div class="card-inner">
+            <div class="verse-block">
+              <div class="verse-en"><span class="vnum">${day.verseNum}</span>${day.en}</div>
+              <div class="verse-ta"><span class="vnum">${day.verseNum}</span>${day.ta}</div>
+            </div>
+            <div class="checklist" data-day="${day.id}">
+              ${TASKS.map((t,i)=>`
+                <div class="task" data-idx="${i}">
+                  <div class="task-box">${checkmarkSvg()}</div>
+                  <div class="task-label">${t}</div>
+                </div>`).join('')}
+            </div>
+            <div class="complete-banner">✦ Day ${day.id} complete — well done!</div>
+          </div>
+        </div>
+      </div>
+    `;
+    trail.appendChild(card);
+  });
+
+  // event: toggle open
+  trail.querySelectorAll('.card-head').forEach(head=>{
+    head.addEventListener('click', ()=>{
+      const card = head.closest('.day-card');
+      card.classList.toggle('open');
+    });
+  });
+
+  // event: toggle task
+  trail.querySelectorAll('.task').forEach(task=>{
+    task.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const list = task.closest('.checklist');
+      const dayId = list.getAttribute('data-day');
+      const idx = parseInt(task.getAttribute('data-idx'));
+      progress['day'+dayId][idx] = !progress['day'+dayId][idx];
+      saveProgress();
+      render();
+    });
+  });
+}
+
+function render(){
+  let totalDone = 0;
+  let daysComplete = 0;
+  const RING_CIRC = 87.9;
+
+  DAYS.forEach(day=>{
+    const state = progress['day'+day.id] || [false,false,false,false];
+    const doneCount = state.filter(Boolean).length;
+    totalDone += doneCount;
+    if(doneCount === 2) daysComplete++;
+
+    // tasks
+    const card = document.getElementById('card-'+day.id);
+    const tasks = card.querySelectorAll('.task');
+    tasks.forEach((t,i)=>{
+      t.classList.toggle('done', !!state[i]);
+    });
+
+    // ring
+    const ring = document.getElementById('ring-'+day.id);
+    const offset = RING_CIRC - (doneCount/2)*RING_CIRC;
+    ring.style.strokeDashoffset = offset;
+    document.getElementById('ringLabel-'+day.id).textContent = doneCount+'/2';
+
+    // complete state
+    card.classList.toggle('complete', doneCount===2);
+  });
+
+  // trail fill
+  const pct = (totalDone / (DAYS.length*2)) * 100;
+  document.getElementById('trailFg').style.height = pct+'%';
+
+  // lantern fill
+  const fillHeight = (pct/100) * 55;
+  document.getElementById('lanternFill').setAttribute('y', 100 - fillHeight);
+  document.getElementById('lanternFill').setAttribute('height', fillHeight);
+  document.getElementById('glowHalo').setAttribute('opacity', 0.15 + (pct/100)*0.55);
+  document.getElementById('flame').setAttribute('opacity', 0.3 + (pct/100)*0.7);
+
+  document.getElementById('lanternStat').textContent = `${daysComplete} of ${DAYS.length} days complete`;
+
+  const captions = [
+    "Light your lamp — begin Day 1",
+    "A small flame is growing",
+    "Your lamp is catching light",
+    "Halfway up the mountain",
+    "Your path is nearly lit",
+    "Almost at the high places",
+    "Your lamp is fully lit — well done!"
+  ];
+  document.getElementById('lanternCaption').textContent = captions[daysComplete];
+}
+
+document.getElementById('resetBtn').addEventListener('click', async ()=>{
+  if(confirm('Reset all progress for the 6-day challenge?')){
+    progress = defaultProgress();
+    await saveProgress();
+    render();
+  }
+});
+
+buildTrail();
+loadProgress();
+</script>
+</body>
+</html>
